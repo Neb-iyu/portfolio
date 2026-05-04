@@ -1,237 +1,1002 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Nebiyu Samuel | Software Engineer Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebiyu Samuel - Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --p:           hsl(174, 35%, 44%);
+            --p-hover:     hsl(174, 35%, 36%);
+            --p-light:     hsl(174, 35%, 96%);
+            --p-border:    hsl(174, 30%, 82%);
+
+            /* Light mode layered backgrounds (elevation via bg variation) */
+            --bg:          hsl(210, 17%, 97%);   /* page — very slightly blue-tinted */
+            --bg-card:     hsl(0, 0%, 100%);     /* card — pure white sits above page */
+            --bg-inset:    hsl(210, 16%, 96%);   /* inset — slightly darker than card */
+            --bg-card-hov: hsl(210, 20%, 99%);
+
+            --text:        hsl(220, 13%, 13%);   /* near-black, blue tint */
+            --text-2:      hsl(220, 8%, 40%);
+            --text-3:      hsl(220, 6%, 58%);
+
+            --border:      hsl(220, 13%, 91%);   /* visible, not transparent */
+            --border-vis:  var(--p-border);
+
+            /* Shadows — light mode only, layered for depth */
+            --sh-xs:  0 1px 2px rgba(0,0,0,0.04);
+            --sh-sm:  0 1px 3px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+            --sh-md:  0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+            --sh-lg:  0 12px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05);
+
+            --ease:     cubic-bezier(0.4, 0.0, 0.2, 1);
+            --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        html.dark {
+            --p:           hsl(174, 20%, 62%);
+            --p-hover:     hsl(174, 20%, 72%);
+            --p-light:     hsl(174, 15%, 16%);
+            --p-border:    hsl(174, 18%, 32%);
+
+            /* Dark mode: bg variation for elevation, no shadows */
+            --bg:          hsl(220, 10%, 7%);
+            --bg-card:     hsl(220, 9%, 11%);    /* card sits above page */
+            --bg-inset:    hsl(220, 8%, 9%);     /* inset sits below card */
+            --bg-card-hov: hsl(220, 9%, 13%);
+
+            --text:        hsl(210, 14%, 93%);
+            --text-2:      hsl(210, 8%, 62%);
+            --text-3:      hsl(210, 6%, 44%);
+
+            --border:      hsl(220, 10%, 18%);   /* visible border for elevation */
+            --border-vis:  hsl(220, 10%, 26%);
+
+            /* NO shadows in dark mode */
+            --sh-xs: none;
+            --sh-sm: none;
+            --sh-md: none;
+            --sh-lg: none;
+        }
+
+        /* ─── Base ─────────────────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; color-scheme: light; }
+        html.dark { color-scheme: dark; }
+        * { font-family: 'Space Grotesk', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.3s var(--ease), color 0.3s var(--ease);
+        }
+
+        /* ─── Grid background ──────────────────────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        html.light body::before {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(hsl(174, 35%, 50%, 0.18) 1px, transparent 1px),
+                linear-gradient(90deg, hsl(174, 35%, 50%, 0.18) 1px, transparent 1px);
+            background-size: 56px 56px;
+        }
+
+        html.dark body::before {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(hsl(174, 20%, 65%, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, hsl(174, 20%, 65%, 0.07) 1px, transparent 1px);
+            background-size: 56px 56px;
+        }
+
+        /* ─── Scrollbar ────────────────────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        html.light ::-webkit-scrollbar-thumb { background: hsl(174, 25%, 78%); border-radius: 4px; }
+        html.dark  ::-webkit-scrollbar-thumb { background: hsl(174, 15%, 24%); border-radius: 4px; }
+
+        /* ─── Typography helpers ───────────────────────────────────────────── */
+        .text-secondary { color: var(--text-2); }
+        .text-muted     { color: var(--text-3); }
+        html.light .gradient-text { color: var(--p); }
+        html.dark  .gradient-text { color: var(--p); }
+
+        /* Section label — left-aligned accent underline */
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--p);
+            margin-bottom: 8px;
+        }
+
+        /* ─── Card — solid bg, proper border, shadow in light / border in dark ── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition:
+                box-shadow 0.25s var(--ease),
+                border-color 0.25s var(--ease),
+                background 0.25s var(--ease),
+                transform 0.25s var(--ease);
+        }
+
+        html.light .card { box-shadow: var(--sh-sm); }
+        html.dark  .card { box-shadow: none; }
+
+        html.light .card:hover { box-shadow: var(--sh-md); border-color: var(--border-vis); transform: translateY(-3px); }
+        html.dark  .card:hover { border-color: var(--border-vis); background: var(--bg-card-hov); transform: translateY(-3px); }
+
+        /* Inset element inside card — border radius stacking: 16px card - 8px padding = 8px inner */
+        .card-inset {
+            background: var(--bg-inset);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* ─── Glass — for nav and floating elements only ───────────────────── */
+        .glass {
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            transition:
+                background 0.25s var(--ease),
+                border-color 0.25s var(--ease),
+                box-shadow 0.25s var(--ease);
+        }
+
+        html.light .glass { background: rgba(255,255,255,0.82); border: 1px solid var(--border); box-shadow: var(--sh-sm); }
+        html.dark  .glass { background: rgba(15,16,18,0.82);    border: 1px solid var(--border); box-shadow: none; }
+        html.light .glass:hover { background: rgba(255,255,255,0.94); box-shadow: var(--sh-md); }
+        html.dark  .glass:hover { background: rgba(20,22,25,0.90);    border-color: var(--border-vis); }
+
+        /* ─── Navigation ───────────────────────────────────────────────────── */
+        nav {
+            transform: none !important;
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+        }
+
+        html.light nav {
+            background: rgba(246,247,249,0.92);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--sh-xs);
+        }
+
+        html.dark nav {
+            background: rgba(10,11,14,0.92);
+            border-bottom: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        html.light .nav-pill { background: rgba(255,255,255,0.7); border: 1px solid var(--border); box-shadow: var(--sh-xs); }
+        html.dark  .nav-pill { background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+
+        .nav-link {
+            color: var(--text-2);
+            transition: color 0.2s var(--ease), background 0.2s var(--ease);
+            border-radius: 9999px;
+        }
+        html.light .nav-link:hover { color: var(--p); background: var(--p-light); }
+        html.dark  .nav-link:hover { color: var(--p); background: var(--p-light); }
+
+        #theme-toggle {
+            transform: none !important;
+            transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+        }
+        html.light #theme-toggle { background: rgba(255,255,255,0.7); border: 1px solid var(--border); color: var(--p); }
+        html.light #theme-toggle:hover { background: var(--p-light); border-color: var(--p-border); }
+        html.dark  #theme-toggle { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--p); }
+        html.dark  #theme-toggle:hover { background: var(--p-light); border-color: var(--p-border); }
+
+        /* ─── Link hover color ─────────────────────────────────────────────── */
+        .link-hover { color: var(--text-2); transition: color 0.2s var(--ease); }
+        .link-hover:hover { color: var(--p); }
+
+        /* ─── Glow border ──────────────────────────────────────────────────── */
+        .glow { transition: border-color 0.25s var(--ease); }
+        .glow:hover { border-color: var(--border-vis) !important; }
+
+        /* ─── Bento grid ───────────────────────────────────────────────────── */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            grid-auto-rows: 280px;
+        }
+
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition:
+                transform 0.3s var(--ease),
+                box-shadow 0.3s var(--ease),
+                background 0.25s var(--ease),
+                border-color 0.25s var(--ease);
+        }
+
+        html.light .bento-item { box-shadow: var(--sh-sm); }
+        html.dark  .bento-item { box-shadow: none; }
+
+        .bento-item:hover { transform: translateY(-5px); }
+        html.light .bento-item:hover { box-shadow: var(--sh-lg); border-color: var(--border-vis); }
+        html.dark  .bento-item:hover { background: var(--bg-card-hov); border-color: var(--border-vis); }
+        .bento-item:active { transform: translateY(-2px); }
+
+        .bento-item.tall { grid-row: span 2; }
+        .bento-item.wide { grid-column: span 2; }
+
+        @media (max-width: 768px) {
+            .bento-grid { gap: 16px; }
+            .bento-item.wide { grid-column: span 1; }
+        }
+
+        /* ─── Tag filters ──────────────────────────────────────────────────── */
+        .tag-filter {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            transition: all 0.2s var(--ease);
+        }
+        .tag-filter:hover { border-color: var(--p-border); color: var(--p); background: var(--p-light); }
+        .tag-filter.active { background: var(--p) !important; color: #fff !important; border-color: var(--p) !important; }
+        html.dark .tag-filter.active { background: var(--p-light) !important; color: var(--p) !important; border-color: var(--p-border) !important; }
+        .tag-filter:active { transform: scale(0.97); }
+
+        /* ─── Skill badges ─────────────────────────────────────────────────── */
+        .skill-badge {
+            background: var(--bg-inset);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            transition: all 0.2s var(--ease);
+        }
+        .skill-badge:hover { background: var(--p-light); border-color: var(--p-border); color: var(--p); }
+
+        /* ─── Demo button ──────────────────────────────────────────────────── */
+        .demo-btn {
+            background: var(--p);
+            color: #fff;
+            border: 1px solid transparent;
+            transition: all 0.2s var(--ease);
+        }
+        .demo-btn:hover { background: var(--p-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        html.dark .demo-btn { background: var(--p-light); color: var(--p); border-color: var(--p-border); }
+        html.dark .demo-btn:hover { background: hsl(174,18%,22%); }
+        .demo-btn:active { transform: translateY(0); box-shadow: none; }
+
+        /* ─── Video modal ──────────────────────────────────────────────────── */
+        .video-modal { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+
+        /* ─── Project image overlay ────────────────────────────────────────── */
+        .project-img-container {
+            position: relative; overflow: hidden;
+            border-radius: 12px 12px 0 0;   /* inner radius: 16px card - 4px padding ≈ 12px */
+            height: 200px;
+            background: linear-gradient(135deg, var(--p), var(--p-hover));
+        }
+        .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease-out); }
+        .project-img-container:hover .project-img { transform: scale(1.05); }
+
+        .image-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.68);
+            backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            opacity: 0;
+            transition: opacity 0.25s var(--ease);
+            z-index: 10;
+        }
+        .project-img-container:hover .image-overlay { opacity: 1; }
+
+        .overlay-btn {
+            background: rgba(255,255,255,0.95);
+            padding: 8px 16px; border-radius: 2rem;
+            font-size: 0.8125rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text);
+            text-decoration: none; border: none; cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s var(--ease);
+        }
+        .overlay-btn:hover { background: #fff; color: var(--p); transform: translateY(-2px); }
+
+        /* ─── Hero icon ────────────────────────────────────────────────────── */
+        .hero-icon-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-icon {
+            width: 360px;
+            height: 360px;
+            color: var(--p);
+            opacity: 0.5;
+            transition: opacity 0.35s var(--ease), filter 0.35s var(--ease);
+            filter: drop-shadow(0 0 12px var(--p));
+        }
+
+        html.dark .hero-icon {
+            opacity: 0.38;
+            filter: drop-shadow(0 0 10px var(--p));
+        }
+
+        .hero-icon-wrap:hover .hero-icon {
+            opacity: 0.72;
+            filter: drop-shadow(0 0 18px var(--p));
+        }
+
+        @media (max-width: 768px) {
+            .hero-icon { width: 220px; height: 220px; }
+        }
+
+    </style>
 </head>
-<body class="antialiased">
+<body>
 
-  <!-- Navigation -->
-  <nav class="nav-shell sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-[var(--color-border)] shadow-sm">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
-      <a href="#" class="text-2xl font-bold tracking-tight"><span class="gradient-text">Nebiyu</span> <span class="font-mono text-[var(--color-text-secondary)]">Samuel</span></a>
-      <div class="flex gap-4 items-center">
-        <a href="#projects" class="hidden md:inline-block font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition">Projects</a>
-        <a href="#about" class="hidden md:inline-block font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition">About</a>
-        <a href="#contact" class="hidden md:inline-block font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition">Contact</a>
-        <button type="button" data-action="toggle-theme" class="px-4 py-2 rounded-full bg-[var(--color-primary)] text-white text-sm font-medium shadow-sm hover:shadow-md transition flex items-center gap-2">
-          <i class="fas fa-palette"></i>
-        </button>
-      </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50">
+        <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+
+            <!-- Logo: wordmark instead of initials -->
+            <a href="#" class="flex items-center gap-2 group">
+                <!-- Terminal / code bracket icon -->
+                <svg class="w-5 h-5" style="color: var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <polyline points="16 18 22 12 16 6"/>
+                    <polyline points="8 6 2 12 8 18"/>
+                </svg>
+                <span class="text-sm font-semibold mono tracking-wide" style="color: var(--p-dark)">nebiyu.dev</span>
+            </a>
+
+            <!-- Nav links — pill container -->
+            <div class="hidden md:flex items-center gap-1 px-2 py-1.5 rounded-full glass nav-pill">
+                <a href="#about"    class="nav-link px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 hover:text-[hsl(174,35%,48%)] dark:hover:text-[hsl(174,20%,65%)]">About</a>
+                <a href="#projects" class="nav-link px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 hover:text-[hsl(174,35%,48%)] dark:hover:text-[hsl(174,20%,65%)]">Projects</a>
+                <a href="#skills"   class="nav-link px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 hover:text-[hsl(174,35%,48%)] dark:hover:text-[hsl(174,20%,65%)]">Skills</a>
+                <a href="#contact"  class="nav-link px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 hover:text-[hsl(174,35%,48%)] dark:hover:text-[hsl(174,20%,65%)]">Contact</a>
+            </div>
+
+            <!-- Right side: theme toggle -->
+            <button id="theme-toggle" class="flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm font-medium transition-all duration-200">
+                <!-- Sun (shown in light mode) -->
+                <svg id="sun-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <span class="hidden sm:inline text-xs mono opacity-60">theme</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center px-6 pt-20">
+        <div class="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-12">
+
+            <!-- Left: text content -->
+            <div class="flex-1 md:text-left text-center">
+                <div class="mb-6 inline-block">
+                    <span class="text-sm mono px-4 py-2 rounded-full glass">Available for opportunities</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight gradient-text leading-tight">
+                    Nebiyu Samuel
+                </h2>
+                <p class="text-xl md:text-2xl mb-3 font-medium">Software Engineering Student</p>
+                <p class="text-base text-secondary mb-10 mono">
+                    @ Addis Ababa Science and Technology University
+                </p>
+                
+                <!-- Social Links -->
+                <div class="flex md:justify-start justify-center gap-3 mb-10">
+                    <a href="https://github.com/Neb-iyu" target="_blank" rel="noopener noreferrer" 
+                       class="p-3 rounded-xl glass glow transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                            <path d="M9 18c-4.51 2-5-2-7-2"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nebiyu-samuel-378a92321" target="_blank" rel="noopener noreferrer" 
+                       class="p-3 rounded-xl glass glow transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                            <rect width="4" height="12" x="2" y="9"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:nebiyusaml20@gmail.com" 
+                       class="p-3 rounded-xl glass glow transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <a href="#projects" class="inline-flex items-center gap-2 text-sm font-medium glass px-6 py-3 rounded-full glow transition-all duration-300">
+                    Explore my work
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Right: large dev icon -->
+            <div class="flex-shrink-0 flex items-center justify-center select-none" aria-hidden="true">
+                <div class="hero-icon-wrap">
+                    <!-- ph:code-bold — bold < /> brackets from Phosphor Icons via better-icons -->
+                    <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M71.68 97.22L34.74 128l36.94 30.78a12 12 0 1 1-15.36 18.44l-48-40a12 12 0 0 1 0-18.44l48-40a12 12 0 0 1 15.36 18.44m176 21.56l-48-40a12 12 0 1 0-15.36 18.44L221.26 128l-36.94 30.78a12 12 0 1 0 15.36 18.44l48-40a12 12 0 0 0 0-18.44M164.1 28.72a12 12 0 0 0-15.38 7.18l-64 176a12 12 0 0 0 7.18 15.37a11.8 11.8 0 0 0 4.1.73a12 12 0 0 0 11.28-7.9l64-176a12 12 0 0 0-7.18-15.38"/>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen px-6 py-24">
+        <div class="max-w-6xl mx-auto">
+            <p class="section-label text-center block mb-2">Background</p>
+            <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">About Me</h3>
+            
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="card p-8 glow transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-5 h-5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                        <h4 class="text-lg font-semibold">Education</h4>
+                    </div>
+                    <p class="text-secondary leading-relaxed text-sm">
+                        Software Engineering student at AASTU, focusing on full-stack development, 
+                        distributed systems, and machine learning applications.
+                    </p>
+                </div>
+
+                <div class="card p-8 glow transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-5 h-5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                        <h4 class="text-lg font-semibold">Focus Areas</h4>
+                    </div>
+                    <p class="text-secondary leading-relaxed text-sm">
+                        Building scalable web applications, real-time communication systems, 
+                        and predictive models. Experienced with TypeScript, Go, Java, and Python.
+                    </p>
+                </div>
+
+                <div class="card p-8 glow transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-5 h-5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <h4 class="text-lg font-semibold">Experience</h4>
+                    </div>
+                    <p class="text-secondary leading-relaxed text-sm">
+                        Delivered production applications including a tour booking platform for real clients. 
+                        Built distributed systems using RMI, WebSocket and WebRTC for real-time features.
+                    </p>
+                </div>
+
+                <div class="card p-8 glow transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-5 h-5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+                        </svg>
+                        <h4 class="text-lg font-semibold">Currently</h4>
+                    </div>
+                    <p class="text-secondary leading-relaxed text-sm">
+                        Expanding skills in cloud infrastructure, containerization, deep learning, and system design. 
+                        Open to internships and collaborative projects.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="min-h-screen px-6 py-24">
+        <div class="max-w-7xl mx-auto">
+            <p class="section-label text-center block mb-2">Portfolio</p>
+            <h3 class="text-3xl md:text-4xl font-bold mb-4 text-center gradient-text">Selected Work</h3>
+            <p class="text-center text-secondary mb-12 max-w-xl mx-auto text-sm">
+                Projects across machine learning, distributed systems, and full-stack web
+            </p>
+            
+            <!-- Tag Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="tag-filter active px-6 py-3 rounded-full text-sm font-medium glass" data-tag="all">
+                    All
+                </button>
+                <button class="tag-filter px-6 py-3 rounded-full text-sm font-medium glass" data-tag="machine-learning">
+                    Machine Learning
+                </button>
+                <button class="tag-filter px-6 py-3 rounded-full text-sm font-medium glass" data-tag="web">
+                    Web
+                </button>
+                <button class="tag-filter px-6 py-3 rounded-full text-sm font-medium glass" data-tag="mobile">
+                    Mobile
+                </button>
+                <button class="tag-filter px-6 py-3 rounded-full text-sm font-medium glass" data-tag="backend">
+                    Backend
+                </button>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="bento-grid">
+                <!-- Project 1: Loan Approval Prediction -->
+                <div class="bento-item tall p-6 glow" data-tags="machine-learning">
+                    <div class="h-full flex flex-col">
+                        <span class="section-label mb-2">Machine Learning</span>
+                        <h4 class="text-xl font-bold mb-3">Loan Approval Prediction</h4>
+                        <p class="text-sm text-secondary mb-4 flex-grow leading-relaxed">
+                            ML model analyzing loan approval patterns using Python and NumPy. 
+                            Implements classification algorithms to predict creditworthiness based on applicant data.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">Python</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">NumPy</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">ML</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://github.com/Neb-iyu/Loan-Approval-Prediction" target="_blank" rel="noopener noreferrer" 
+                               class="link-hover inline-flex items-center gap-2 text-sm font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" x2="21" y1="14" y2="3"/>
+                                </svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Music Stream App -->
+                <div class="bento-item p-6 glow" data-tags="backend mobile">
+                    <div class="h-full flex flex-col">
+                        <span class="section-label mb-2">Distributed Systems</span>
+                        <h4 class="text-xl font-bold mb-2">iStream</h4>
+                        <p class="text-sm text-secondary mb-3 flex-grow leading-relaxed">
+                            Distributed music streaming using Java RMI for remote method invocation and real-time audio delivery.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">Java</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">RMI</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://github.com/Neb-iyu/iStream" target="_blank" rel="noopener noreferrer" 
+                               class="link-hover inline-flex items-center gap-2 text-sm font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" x2="21" y1="14" y2="3"/>
+                                </svg>
+                                GitHub
+                            </a>
+                            <button class="demo-btn text-xs px-4 py-2 rounded-lg font-medium inline-flex items-center gap-2" data-video="https://www.youtube.com/embed/1oyKZa0nRbE">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <polygon points="5 3 19 12 5 21 5 3"/>
+                                </svg>
+                                Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Video Call App -->
+                <div class="bento-item p-6 glow" data-tags="web backend">
+                    <div class="h-full flex flex-col">
+                        <span class="section-label mb-2">Real-time</span>
+                        <h4 class="text-xl font-bold mb-2">FaceTime Clone</h4>
+                        <p class="text-sm text-secondary mb-3 flex-grow leading-relaxed">
+                             WebRTC video conferencing, Go backend as a Selective Forwarding Unit (SFU) server, and TypeScript frontend.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">Go</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">TypeScript</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">WebRTC</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">WebSocket</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://github.com/Neb-iyu/facetime-app" target="_blank" rel="noopener noreferrer" 
+                               class="link-hover inline-flex items-center gap-2 text-sm font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" x2="21" y1="14" y2="3"/>
+                                </svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Mado Tour -->
+                <div class="bento-item wide p-6 glow" data-tags="web">
+                    <div class="h-full flex flex-col">
+                        <span class="section-label mb-2">Production · Live</span>
+                        <h4 class="text-2xl font-bold mb-3">Mado Tour</h4>
+                        <p class="text-sm text-secondary mb-4 flex-grow leading-relaxed">
+                            Production tour booking platform with TypeScript, React, and modern UI. 
+                            Features itinerary management, booking system, and payment integration. Currently serving real clients.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">TypeScript</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">React</span>
+                            <span class="skill-badge text-xs px-3 py-1 rounded-full mono">Full-stack</span>
+                        </div>
+                        <div class="flex gap-4 items-center">
+                            <a href="https://mado-tour-web.vercel.app/" target="_blank" rel="noopener noreferrer" 
+                               class="link-hover inline-flex items-center gap-2 text-sm font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="2" x2="22" y1="12" y2="12"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                                Live Site
+                            </a>
+                            <button class="demo-btn text-xs px-4 py-2 rounded-lg font-medium inline-flex items-center gap-2" data-video="https://www.youtube.com/embed/vgKHIIWkvk0">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <polygon points="5 3 19 12 5 21 5 3"/>
+                                </svg>
+                                Watch Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="px-6 py-24">
+        <div class="max-w-6xl mx-auto">
+            <p class="section-label text-center block mb-2">Toolkit</p>
+            <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">Tech Stack</h3>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide Palette icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <circle cx="13.5" cy="6.5" r=".5"/>
+                            <circle cx="17.5" cy="10.5" r=".5"/>
+                            <circle cx="8.5" cy="7.5" r=".5"/>
+                            <circle cx="6.5" cy="12.5" r=".5"/>
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Frontend</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">TypeScript</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">React</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">HTML/CSS</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Tailwind</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide Server icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/>
+                            <rect width="20" height="8" x="2" y="14" rx="2" ry="2"/>
+                            <line x1="6" x2="6.01" y1="6" y2="6"/>
+                            <line x1="6" x2="6.01" y1="18" y2="18"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Backend</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Go</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Java</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Python</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Node.js</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide Brain icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Data & ML</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">NumPy</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Pandas</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">ML</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Data Analysis</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide Wrench icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Tools</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Git</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Docker</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">VS Code</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Linux</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide Zap icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Specialties</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">WebRTC</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">RMI</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">REST APIs</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Real-time</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <!-- Lucide BookOpen icon -->
+                        <svg class="w-6 h-6 gradient-text" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        <h4 class="text-xl font-bold">Learning</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">Rust</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">GraphQL</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">K8s</span>
+                        <span class="skill-badge px-3 py-1.5 rounded-lg text-sm mono">AWS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="px-6 py-24">
+        <div class="max-w-2xl mx-auto text-center">
+            <p class="section-label text-center block mb-2">Get in touch</p>
+            <h3 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Let's Connect</h3>
+            <p class="text-secondary mb-12 text-sm leading-relaxed">
+                Open to internships, collaborations, and interesting projects. 
+                Whether it's a full-time role or just a chat about tech — reach out.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <a href="mailto:nebiyusaml20@gmail.com" class="card p-6 glow flex flex-col items-center gap-3 text-center">
+                    <svg class="w-6 h-6" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                    <div>
+                        <p class="text-sm font-semibold mb-1">Email</p>
+                        <p class="text-xs text-secondary break-all">nebiyusaml20@gmail.com</p>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/Neb-iyu" target="_blank" rel="noopener noreferrer" class="card p-6 glow flex flex-col items-center gap-3 text-center">
+                    <svg class="w-6 h-6" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                    </svg>
+                    <div>
+                        <p class="text-sm font-semibold mb-1">GitHub</p>
+                        <p class="text-xs text-secondary">@Neb-iyu</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/nebiyu-samuel-378a92321l" target="_blank" rel="noopener noreferrer" class="card p-6 glow flex flex-col items-center gap-3 text-center">
+                    <svg class="w-6 h-6" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect width="4" height="12" x="2" y="9"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    <div>
+                        <p class="text-sm font-semibold mb-1">LinkedIn</p>
+                        <p class="text-xs text-secondary">Nebiyu Samuel</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center justify-center gap-6 text-xs text-muted">
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Addis Ababa, Ethiopia
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" style="color:var(--p)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" x2="22" y1="12" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    Open to remote
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center video-modal bg-black/80">
+        <div class="relative w-full max-w-4xl mx-6">
+            <button id="close-modal" class="absolute -top-12 right-0 text-white opacity-70 hover:opacity-100 transition-opacity">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div id="video-container" class="glass rounded-2xl overflow-hidden aspect-video">
+                <!-- Video will be embedded here -->
+            </div>
+        </div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section class="max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-24">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-12">
-      <div class="flex-1 space-y-6">
-        <div class="inline-block px-4 py-1.5 rounded-full text-sm font-mono border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-          <i class="fas fa-code mr-2"></i> Software Engineer
+    <!-- Footer -->
+    <footer class="glass py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-sm text-secondary mb-2">
+                Designed & Built by Nebiyu Samuel
+            </p>
+            <p class="text-xs text-muted mono">
+                © 2026
+            </p>
         </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-          Building <span class="gradient-text">digital experiences</span><br>with modern full‑stack craft
-        </h1>
-        <p class="text-lg text-[var(--color-text-secondary)] max-w-xl leading-relaxed">
-          TypeScript · Go · Java · Python · React. I design scalable systems and elegant solutions. 4+ impactful projects, open source contributor.
-        </p>
-        <div class="flex flex-wrap gap-4 pt-2">
-          <a href="#projects" class="btn-primary px-7 py-3 text-white font-semibold shadow-md inline-flex items-center gap-2"><i class="fas fa-arrow-down"></i> Explore Work</a>
-          <a href="#contact" class="px-7 py-3 rounded-full border-2 border-[var(--color-primary)] text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)] hover:text-white transition"><i class="fas fa-paper-plane"></i> Contact</a>
-        </div>
-      </div>
-      <div class="flex-1 flex justify-center">
-        <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center p-2">
-          <div class="w-full h-full rounded-full bg-white shadow-xl flex items-center justify-center text-7xl font-bold text-[var(--color-primary)]">
-            <i class="fas fa-laptop-code text-6xl"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Projects Section -->
-  <section id="projects" class="max-w-6xl mx-auto px-6 py-16">
-    <div class="section-title mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">Featured Projects</h2>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      
-      <!-- 1. Loan Approval Prediction -->
-      <div class="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] card-hover overflow-hidden">
-        <div class="project-img-container relative">
-          <img class="project-img" data-fallback-icon="fab fa-python" data-fallback-label="Loan ML Demo" src="https://placehold.co/800x400/1e293b/ffffff?text=Loan+Approval+ML+Model+%7C+Python+NumPy" alt="Loan approval prediction">
-          <div class="image-overlay">
-            <a href="https://github.com/Neb-iyu/Loan-Approval-Prediction" target="_blank" class="overlay-btn"><i class="fab fa-github"></i> GitHub</a>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="flex justify-between items-start">
-            <div class="p-3 rounded-xl bg-blue-100 text-[var(--color-primary)]"><i class="fab fa-python text-2xl"></i></div>
-            <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-full">Machine Learning</span>
-          </div>
-          <h3 class="text-2xl font-bold mt-4 mb-2 text-[var(--color-text-primary)]">Loan Approval Predictor</h3>
-          <p class="text-[var(--color-text-secondary)] mb-4">Advanced predictive model using NumPy & scikit-learn. 91% accuracy on credit risk evaluation, feature engineering & a custom made logistic regression model.</p>
-          <div class="flex flex-wrap gap-2 mb-5">
-            <span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Python</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">NumPy</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Pandas</span>
-          </div>
-          <div class="flex gap-3 pt-2 border-t border-[var(--color-border)] mt-4">
-            <a href="https://github.com/Neb-iyu/Loan-Approval-Prediction" target="_blank" class="text-sm font-medium flex items-center gap-1 text-[var(--color-primary)]"><i class="fab fa-github"></i> GitHub</a>
-          </div>
-          <div class="flex gap-3 pt-2 border-t border-[var(--color-border)] mt-4">
-            <a href="https://github.com/Neb-iyu/Loan-Approval-Prediction/blob/main/LoanApprovalP.ipynb" target="_blank" class="text-sm font-medium flex items-center gap-1 text-[var(--color-primary)]"><i class="fa-solid fa-book-open"></i> Jupyter Notebook</a>
-          </div>
-        </div>
-      </div>
+    <script>
+        // Theme Toggle with proper dark mode support
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.remove('light', 'dark');
+        html.classList.add(currentTheme);
 
-      <!-- 2. iStream Music App (Java RMI) -->
-      <div class="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] card-hover overflow-hidden">
-        <div class="project-img-container relative">
-          <img class="project-img" data-fallback-src="https://placehold.co/800x400/2d2a2a/ffffff?text=iStream+Music+Streaming+%7C+Java+RMI" data-fallback-icon="fab fa-java" data-fallback-label="Java RMI" src="assets/iStream.png" alt="iStream music app">
-          <div class="image-overlay">
-            <a href="https://github.com/Neb-iyu/iStream" target="_blank" class="overlay-btn"><i class="fab fa-github"></i> GitHub</a>
-            <button type="button" data-action="open-video" data-project-name="iStream Music Streaming" data-video-url="https://www.youtube.com/embed/1oyKZa0nRbE?autoplay=0" class="overlay-btn"><i class="fas fa-video"></i> Demo Video</button>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="flex justify-between items-start">
-            <div class="p-3 rounded-xl bg-orange-100 text-orange-600"><i class="fab fa-java text-2xl"></i></div>
-            <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-full">Distributed Systems</span>
-          </div>
-          <h3 class="text-2xl font-bold mt-4 mb-2 text-[var(--color-text-primary)]">iStream · Music Streaming</h3>
-          <p class="text-[var(--color-text-secondary)] mb-4">Java RMI based peer-to-peer music platform with real-time playlists, remote method invocation, and multi-client concurrency.</p>
-          <div class="flex flex-wrap gap-2 mb-5">
-            <span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Java RMI</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">JavaFX UI</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Multithreading</span>
-          </div>
-          <div class="flex gap-3 pt-2 border-t border-[var(--color-border)] mt-4">
-            <a href="https://github.com/Neb-iyu/iStream" target="_blank" class="text-sm font-medium flex items-center gap-1 text-[var(--color-primary)]"><i class="fab fa-github"></i> GitHub</a>
-          </div>
-        </div>
-      </div>
+        themeToggle.addEventListener('click', () => {
+            const newTheme = html.classList.contains('dark') ? 'light' : 'dark';
+            html.classList.remove('light', 'dark');
+            html.classList.add(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
 
-      <!-- 3. FaceTime Video Call (Go + TypeScript) -->
-      <div class="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] card-hover overflow-hidden">
-        <div class="project-img-container relative">
-          <img class="project-img" data-fallback-src="https://placehold.co/800x400/0f172a/ffffff?text=FaceTime+Video+Call+%7C+Go+WebRTC" data-fallback-icon="fab fa-golang" data-fallback-label="Go + WebRTC" src="https://placehold.co/800x400/0f172a/ffffff?text=FaceTime+Video+Call+%7C+Go+WebRTC" alt="Video call app">
-          <div class="image-overlay">
-            <a href="https://github.com/Neb-iyu/facetime-app" target="_blank" class="overlay-btn"><i class="fab fa-github"></i> GitHub</a>
-            <button type="button" data-action="open-video" data-project-name="FaceTime Video Call App" data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0" class="overlay-btn"><i class="fas fa-video"></i> Demo Video</button>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="flex justify-between items-start">
-            <div class="p-3 rounded-xl bg-emerald-100 text-emerald-600"><i class="fab fa-golang text-2xl"></i></div>
-            <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-full">WebRTC · Real-time</span>
-          </div>
-          <h3 class="text-2xl font-bold mt-4 mb-2 text-[var(--color-text-primary)]">FaceTime‑app . Video Call</h3>
-          <p class="text-[var(--color-text-secondary)] mb-4">WebRTC video conferencing with Go SFU (Selective Forwarding Unit) server, TypeScript frontend, websocket for online/offline/busy check.</p>
-          <div class="flex flex-wrap gap-2 mb-5">
-            <span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Go (Gin)</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">TypeScript</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">WebRTC</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">WebSocket</span>
-          </div>
-          <div class="flex gap-3 pt-2 border-t border-[var(--color-border)] mt-4">
-            <a href="https://github.com/Neb-iyu/facetime-app" target="_blank" class="text-sm font-medium flex items-center gap-1 text-[var(--color-primary)]"><i class="fab fa-github"></i> GitHub</a>
-          </div>
-        </div>
-      </div>
+        // Tag Filtering
+        const tagFilters = document.querySelectorAll('.tag-filter');
+        const bentoItems = document.querySelectorAll('.bento-item');
 
-      <!-- 4. Mado Tour & Travel (Live Vercel + Demo Video) -->
-      <div class="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-[var(--shadow-sm)] card-hover overflow-hidden">
-        <div class="project-img-container relative">
-          <img class="project-img" id="madoTourImg" data-fallback-src="https://placehold.co/800x400/8b5cf6/ffffff?text=Mado+Tour+%26+Travel+Homepage+%28Live+on+Vercel%29" data-fallback-alt="Mado Tour placeholder" src="https://api.microlink.io/?url=https://mado-tour-web.vercel.app&screenshot=true&meta=false&embed=screenshot.url" alt="Mado Tour live homepage">
-          <div class="image-overlay">
-            <a href="https://mado-tour-web.vercel.app" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <button type="button" data-action="open-video" data-project-name="Mado Tour & Travel Platform" data-video-url="https://www.youtube.com/embed/vgKHIIWkvk0?autoplay=0" class="overlay-btn"><i class="fas fa-video"></i> Demo Video</button>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="flex justify-between items-start">
-            <div class="p-3 rounded-xl bg-rose-100 text-rose-500"><i class="fas fa-globe-americas text-2xl"></i></div>
-            <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-full">Next.js · Production</span>
-          </div>
-          <h3 class="text-2xl font-bold mt-4 mb-2 text-[var(--color-text-primary)]">Mado Tour & Travel</h3>
-          <p class="text-[var(--color-text-secondary)] mb-4">Full‑featured tour booking platform (client‑ready). Dynamic destinations, itinerary builder, payment sandbox. Built with TypeScript, Next.js, Tailwind.</p>
-          <div class="flex flex-wrap gap-2 mb-5">
-            <span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">TypeScript</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Next.js</span><span class="text-xs px-3 py-1 rounded-full bg-gray-200/60">Tailwind</span>
-          </div>
-          <div class="flex gap-3 pt-2 border-t border-[var(--color-border)] mt-4">
-            <a href="https://mado-tour-web.vercel.app" target="_blank" class="text-sm font-medium flex items-center gap-1 text-[var(--color-primary)]"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-          </div>
-          <p class="text-xs text-[var(--color-text-muted)] mt-3 italic"><i class="fas fa-lock"></i> Private client repo — preview media available via Youtube link</p>
-        </div>
-      </div>
-    </div>
+        tagFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                const tag = filter.dataset.tag;
+                
+                // Update active state
+                tagFilters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
 
-    <!-- Additional media note -->
-    <div class="mt-12 text-center text-sm text-[var(--color-text-muted)] border-t border-[var(--color-border)] pt-6 flex justify-center gap-6 flex-wrap">
-      <span><i class="fa-solid fa-info"></i>  The descriptions posted on each project is but only a brief exposition. For more info, demo videos and/or github links are provided upon hover. </span>
-    </div>
-  </section>
+                // Filter projects
+                bentoItems.forEach(item => {
+                    const tags = item.dataset.tags;
+                    if (tag === 'all' || tags.includes(tag)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
 
-  <!-- About Section -->
-  <section id="about" class="max-w-6xl mx-auto px-6 py-20">
-    <div class="bg-[var(--color-bg-card)] rounded-3xl border border-[var(--color-border)] shadow-[var(--shadow-sm)] p-8 md:p-10">
-      <div class="flex flex-col md:flex-row gap-10">
-        <div class="flex-1">
-          <div class="section-title mb-4"><h3 class="text-2xl font-bold">About me</h3></div>
-          <p class="text-[var(--color-text-secondary)] leading-relaxed mb-5">I'm Nebiyu, a 4th year software engineering student at AASTU passionate about building robust backend systems and using ML and deep learning for solving real world cases. I thrive on solving complex problems with different tech stacks mainly Go, TypeScript, and Python. My work ranges from ML predictions to distributed systems and real-time video apps.</p>
-          <p class="text-[var(--color-text-secondary)]">Currently exploring WebRTC optimizations, cloud-native architectures, system design and deep learning. Open to collaborations and innovative projects.</p>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-lg mb-3 flex items-center gap-2"><i class="fas fa-cog text-[var(--color-primary)]"></i> Core Toolkit</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">TypeScript</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Go</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Python</span>
-            <span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Java</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">React/Next</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Tailwind</span>
-            <span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Node.js</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">PostgreSQL</span><span class="px-3 py-1.5 bg-slate-100 rounded-full text-sm">Docker</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        // Video Modal
+        const videoModal = document.getElementById('video-modal');
+        const closeModal = document.getElementById('close-modal');
+        const videoContainer = document.getElementById('video-container');
+        const demoButtons = document.querySelectorAll('.demo-btn');
 
-  <!-- Contact -->
-  <section id="contact" class="max-w-6xl mx-auto px-6 pb-20">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)]">Let's Connect</h2>
-      <div class="w-20 h-1 bg-[var(--color-primary)] mx-auto mt-4 rounded-full"></div>
-      <p class="text-[var(--color-text-muted)] mt-4">Interested in collaboration or a role? Reach out anytime.</p>
-    </div>
-    <div class="flex flex-col md:flex-row justify-center gap-8">
-      <a href="mailto:nebiyusaml20@gmail.com" class="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-sm hover:shadow-md group">
-        <i class="fas fa-envelope text-2xl text-[var(--color-primary)]"></i><span class="font-medium">nebiyusaml20@gmail.com</span>
-      </a>
-      <a href="https://github.com/Neb-iyu" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-sm hover:shadow-md">
-        <i class="fab fa-github text-2xl text-[var(--color-primary)]"></i><span class="font-medium">/Neb-iyu</span>
-      </a>
-      <!-- <a href="#" data-action="open-drive" data-drive-detail="LinkedIn profile / direct contact info" class="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-sm hover:shadow-md">
-        <i class="fab fa-linkedin text-2xl text-[var(--color-primary)]"></i><span class="font-medium">LinkedIn</span>
-      </a> -->
-    </div>
-  </section>
+        demoButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const videoUrl = btn.dataset.video;
+                
+                if (videoUrl) {
+                    videoContainer.innerHTML = `<iframe class="w-full h-full" src="${videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+                    videoModal.classList.remove('hidden');
+                    videoModal.classList.add('flex');
+                } else {
+                    // Show placeholder message if no video URL
+                    videoContainer.innerHTML = `
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                <p class="text-lg mb-2">Demo video coming soon</p>
+                                <p class="text-sm text-secondary">Check the GitHub repository for more details</p>
+                            </div>
+                        </div>
+                    `;
+                    videoModal.classList.remove('hidden');
+                    videoModal.classList.add('flex');
+                }
+            });
+        });
 
-  <footer class="border-t border-[var(--color-border)] py-8 text-center text-[var(--color-text-muted)] text-sm">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
-      <span>© 2026 Nebiyu Samuel — Built with html + css + JS + Tailwind</span>
-      <div class="flex gap-4"><a href="https://github.com/Neb-iyu" class="hover:text-[var(--color-primary)]"><i class="fab fa-github-alt"></i></a>
-    </div>
-  </footer>
+        closeModal.addEventListener('click', () => {
+            videoModal.classList.add('hidden');
+            videoModal.classList.remove('flex');
+            videoContainer.innerHTML = '';
+        });
 
-  <!-- Modal for Demo Video -->
-  <div id="videoModal" class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 hidden transition-all" data-modal-backdrop="video">
-    <div class="bg-black rounded-2xl max-w-4xl w-full mx-4 p-2 shadow-2xl">
-      <div class="flex justify-between items-center p-3 bg-gray-900 rounded-t-xl">
-        <h3 id="videoModalTitle" class="text-white font-semibold">Demo Video</h3>
-        <button type="button" data-action="close-video" class="text-white text-2xl">&times;</button>
-      </div>
-      <div class="aspect-video">
-        <iframe id="videoFrame" class="w-full h-full rounded-b-xl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.add('hidden');
+                videoModal.classList.remove('flex');
+                videoContainer.innerHTML = '';
+            }
+        });
 
-  <script src="script.js"></script>
+        // Smooth scroll offset for fixed nav
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
+
